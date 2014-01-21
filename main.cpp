@@ -106,7 +106,7 @@ bool agent2(const Hand & hand)
 // plays 10's+
 bool agent3(const Hand & hand)
 {
-	if (is_pair(hand) && low_card_rank(hand) >= 10)
+	if (same_suit(hand) && low_card_rank(hand) >= 10)
 		return true;
 	return false;
 }
