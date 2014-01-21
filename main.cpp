@@ -85,14 +85,12 @@ bool agent3(const Hand & hand)
 	return false;
 }
 
-// plays all is_pairs 22+, all suited gappers and connectors 23s+, and all offsuit JQo+, and A10s, AJs
+// plays all is_pairs 22+, all suited hands with the lowest ranked card being >= 10
 bool agent4(const Hand & hand)
 {
-	if ((same_suit(hand) && high_card_rank(hand) - low_card_rank(hand) <= 2) ||
-	    (is_pair(hand)) ||
-		(high_card_rank(hand) - low_card_rank(hand) == 1 && low_card_rank(hand) >= 10) ||
-		(high_card_rank(hand) == 14 && low_card_rank(hand) >= 10 && same_suit(hand)))
+	if (is_pair(hand) || (same_suit(hand) && low_card_rank(hand) >= 10))
 		return true;
+
 	return false;
 }
 
