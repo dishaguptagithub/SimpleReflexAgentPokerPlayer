@@ -37,32 +37,6 @@ char suitToChar(const SUIT & suit)
 	return '\0';
 }
 
-string rankToStr(const int & rank)
-{
-	if (rank < 1 || rank > 13)
-	{
-		cerr << "Error in rankToStr: passed rank = " << rank << endl;
-		exit(1);
-	}
-
-	switch(rank)
-	{
-		case 11:
-			return "j";
-			break;
-		case 12:
-			return "q";
-			break;
-		case 13:
-			return "k";
-			break;
-		default:
-			return std::to_string(rank);
-	}
-
-	return std::to_string(rank);
-}
-
 bool is_pair(const Hand & hand)
 {
 	return (hand.one.rank == hand.two.rank)? true : false;
@@ -111,12 +85,13 @@ bool agent3(const Hand & hand)
 	return false;
 }
 
-// plays all is_pairs 22+, all suited gappers and connectors 23s+, and all offsuit JQo+
+// plays all is_pairs 22+, all suited gappers and connectors 23s+, and all offsuit JQo+, and A10s, AJs
 bool agent4(const Hand & hand)
 {
 	if ((same_suit(hand) && high_card_rank(hand) - low_card_rank(hand) <= 2) ||
 	    (is_pair(hand)) ||
-		(high_card_rank(hand) - low_card_rank(hand) == 1 && low_card_rank(hand) >= 10))
+		(high_card_rank(hand) - low_card_rank(hand) == 1 && low_card_rank(hand) >= 10) ||
+		(high_card_rank(hand) == 14 && low_card_rank(hand) >= 10 && same_suit(hand)))
 		return true;
 	return false;
 }
@@ -153,7 +128,7 @@ int main(int argc, char * argv[])
 
 		for (SUIT one_suit = CLUBS; one_suit <= SPADES; one_suit++)
 		{
-			for (int one_rank = 1; one_rank < 14; one_rank++)
+			for (int one_rank = 2; one_rank <= 14; one_rank++)
 			{
 				Hand hand;
 				hand.one.rank = one_rank;
@@ -161,7 +136,7 @@ int main(int argc, char * argv[])
 
 				for (SUIT two_suit = CLUBS; two_suit <= SPADES; two_suit++)
 				{
-					for (int two_rank = 1; two_rank < 14; two_rank++)
+					for (int two_rank = 2; two_rank <= 14; two_rank++)
 					{
 						// all permutations are valid except for same suit same rank
 						if (!(one_rank == two_rank && one_suit == two_suit))
