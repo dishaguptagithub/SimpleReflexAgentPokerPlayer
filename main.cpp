@@ -23,14 +23,23 @@ struct Hand
 
 char suitToChar(const SUIT & suit)
 {
-	if (suit == CLUBS)
-		return 'c';
-	else if (suit == DIAMONDS)
-		return 'd';
-	else if (suit == HEARTS)
-		return 'h';
-	else if (suit == SPADES)
-		return 's';
+	switch(suit)
+	{
+		case CLUBS:
+			return 'c';
+			break;
+		case DIAMONDS:
+			return 'd';
+			break;
+		case HEARTS:
+			return 'h';
+			break;
+		case SPADES:
+			return 's';
+			break;
+		default:
+			break;
+	}
 
 	cerr << "Error in suitToChar: passed suit = " << suit << endl;
 	exit(1);
@@ -124,6 +133,7 @@ int main(int argc, char * argv[])
 			exit(1);
 		}
 
+		// 2 - 14, 11 = Jack, 12 = Queen, 13 = King, 14 = Ace
 		for (SUIT one_suit = CLUBS; one_suit <= SPADES; one_suit++)
 		{
 			for (int one_rank = 2; one_rank <= 14; one_rank++)
